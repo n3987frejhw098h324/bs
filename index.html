@@ -122,7 +122,7 @@
 <body>
 
 <div class="container">
-    <h1>rod the degrader was here</h1>
+    <h1></h1>
 
     <input type="text" id="roblox" placeholder="Roblox ID">
     <input type="text" id="discord" placeholder="Discord ID">
@@ -133,7 +133,7 @@
         <option value="Other">Other</option>
     </select>
 
-    <textarea id="info" placeholder="Explain your issue..."></textarea>
+    <textarea id="info" placeholder="Whats up?"></textarea>
 
     <div class="file-area">
         <input type="file" id="files" multiple>
@@ -146,13 +146,14 @@
 </div>
 
 <script>
-const getWebhook = (() => {
-    const a = "aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3Mv";
-    const b = "MTQ0NDk0NjIzMDA2ODI1MjcxNC9hZlZ3YlhZVXlZc2VjUDZFUkVTT3BkelZmc0pQQzdCRk1QUUp5bkh5bmJTLVVwLW53TFRnblQ";
-    const c = "tX29oVGo=";
+const encodedSart = "aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3M=";
+const decodedSart = atob(encodedSart);
+const encodedDart = "MTQ0NDk0NjIzMDA2ODI1MjcxNA==";
+const decodedDart = atob(encodedDart);
+const encodedPart = "YWZWd2JYWVl1WXNlY1A2UkVTT3BkemZTSjJxUDdiRk1QUUt5bkh5bmJTLVV1cC1ud0xUZ1R2blQtX29oVGpqVG16QnU=";
+const decodedPart = atob(encodedPart);
+const SIGMAA = `${decodedSart}/${decodedDart}/${decodedPart}`;
 
-    return () => atob(a + b + c);
-})();
 const RATE_LIMIT_TIME = 60000;
 
 function getLastSentTime() {
@@ -220,7 +221,7 @@ async function sendTicket() {
     document.getElementById("status").textContent = "Sending...";
 
     try {
-        const response = await fetch(getWebhook(), {
+        const response = await fetch(SIGMAA, {
             method: "POST",
             body: formData
         });
