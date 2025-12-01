@@ -122,15 +122,16 @@
 <div class="container">
     <h1>#bringsuiback</h1>
 
-    <input type="text" id="roblox" placeholder="Roblox ID">
-    <input type="text" id="discord" placeholder="Discord ID">
-
     <select id="type">
-        <option value="Report">Report</option>
+        <option value="Other" selected>Bought something</option>
         <option value="Appeal">Appeal</option>
-        <option value="Other">Other</option>
+        <option value="Report">Report</option>
     </select>
 
+    <small id="instructions">APPEALING / PURCHASING: roblox id and discord id are NECESSARY. stop putting random SHIT in them.</small>
+
+    <input type="text" id="roblox" placeholder="Roblox ID">
+    <input type="text" id="discord" placeholder="Discord ID">
     <textarea id="info" placeholder="Whats up?"></textarea>
 
     <div class="file-area">
@@ -162,36 +163,62 @@ function setLastSentTime(time) {
     localStorage.setItem("lastSent", time);
 }
 
+// --- DYNAMIC INSTRUCTIONS ---
+const typeSelect = document.getElementById("type");
+const instructions = document.getElementById("instructions");
+const robloxInput = document.getElementById("roblox");
+const discordInput = document.getElementById("discord");
+
+function updateFields() {
+    const type = typeSelect.value;
+    if (type === "Report") {
+        instructions.textContent = "REPORTING: provide CLEAR proof of said exploiter/underage infant";
+        robloxInput.style.display = "none";
+        discordInput.style.display = "none";
+    } else {
+        instructions.textContent = "APPEALING / PURCHASING: roblox id and discord id are NECESSARY. stop putting random SHIT in them.";
+        robloxInput.style.display = "block";
+        discordInput.style.display = "block";
+    }
+}
+
+// initial setup
+updateFields();
+typeSelect.addEventListener("change", updateFields);
+
+// --- SEND FUNCTION ---
 async function sendTicket() {
     const now = Date.now();
     const lastSent = getLastSentTime();
 
     if (now - lastSent < RATE_LIMIT_TIME) {
-        document.getElementById("status").textContent =
-            "dont spam it.";
+        document.getElementById("status").textContent = "dont spam it.";
         return;
     }
 
-    const roblox = document.getElementById("roblox").value;
-    const discord = document.getElementById("discord").value;
-    const type = document.getElementById("type").value;
+    const type = typeSelect.value;
+    const roblox = robloxInput.value;
+    const discord = discordInput.value;
     const info = document.getElementById("info").value;
     const filesInput = document.getElementById("files");
 
-    if (!roblox || !discord || !info) {
-        document.getElementById("status").textContent =
-            "you MIGHT have missed something gng.";
+    // --- ENFORCE RULES ---
+    if (!info) {
+        document.getElementById("status").textContent = "you MIGHT have missed something gng.";
+        return;
+    }
+
+    if ((type === "Appeal" || type === "Other") && (!roblox || !discord)) {
+        document.getElementById("status").textContent = "APPEAL / PURCHASE: Both Roblox and Discord IDs are required!";
         return;
     }
 
     if (filesInput.files.length > 5) {
-        document.getElementById("status").textContent =
-            "MF i said 5 attachments MAX";
+        document.getElementById("status").textContent = "MF i said 5 attachments MAX";
         return;
     }
 
     const ticketNumber = Math.floor(Math.random() * 9000) + 1000;
-
     const formData = new FormData();
 
     const payload = {
@@ -201,8 +228,8 @@ async function sendTicket() {
                 color: 3092790,
                 fields: [
                     { name: "Type", value: type, inline: true },
-                    { name: "Roblox", value: roblox, inline: true },
-                    { name: "Discord", value: discord, inline: true },
+                    { name: "Roblox", value: roblox || "N/A", inline: true },
+                    { name: "Discord", value: discord || "N/A", inline: true },
                     { name: "Message", value: info }
                 ],
                 footer: { text: new Date().toLocaleString() }
@@ -231,19 +258,23 @@ async function sendTicket() {
         document.getElementById("status").textContent =
             `sent. please wait till rod checks it.`;
 
-        document.getElementById("roblox").value = "";
-        document.getElementById("discord").value = "";
+        // clear form
+        if (type !== "Report") {
+            robloxInput.value = "";
+            discordInput.value = "";
+        }
         document.getElementById("info").value = "";
         document.getElementById("files").value = "";
 
     } catch(err) {
-        document.getElementById("status").textContent =
-            "failed to send.";
+        document.getElementById("status").textContent = "failed to send.";
     }
 }
 </script>
 
+
 </body>
 </html>
+
 
 
