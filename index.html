@@ -3,74 +3,118 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>-</title>
+<title>0</title>
 
 <style>
+    * {
+        box-sizing: border-box;
+    }
+
     body {
         margin: 0;
-        background: #0f0f0f;
+        min-height: 100vh;
+        background: radial-gradient(circle at top, #1a1a1a, #0b0b0b);
         color: white;
         font-family: Arial, sans-serif;
+
         display: flex;
-        justify-content: center;
         align-items: center;
-        height: 100vh;
+        justify-content: center;
+
+        padding: 20px;
     }
 
     .container {
         background: #181818;
-        padding: 25px;
-        border-radius: 14px;
-        width: 420px;
-        box-shadow: 0 0 20px rgba(0,0,0,0.6);
-        text-align: center;
+        padding: 28px;
+        border-radius: 16px;
+        width: 100%;
+        max-width: 460px;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.8);
+
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
     }
 
     h1 {
-        margin-bottom: 20px;
+        margin: 0 0 10px;
+        font-size: 20px;
+        text-align: center;
     }
 
     input, textarea, select {
         width: 100%;
-        margin: 8px 0;
-        padding: 10px;
-        border-radius: 8px;
-        border: none;
+        padding: 11px 12px;
+        border-radius: 10px;
+        border: 1px solid #2c2c2c;
         outline: none;
+
         background: #222;
         color: white;
+        font-size: 14px;
+
+        transition: border 0.2s, background 0.2s;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+        border: 1px solid #555;
+        background: #262626;
     }
 
     textarea {
-        height: 100px;
-        resize: none;
+        min-height: 110px;
+        resize: vertical;
     }
 
-    button {
-        width: 100%;
-        padding: 12px;
-        background: #333;
-        color: white;
-        font-weight: bold;
-        border: none;
-        border-radius: 10px;
-        cursor: pointer;
-        margin-top: 10px;
-        transition: 0.2s;
-    }
-
-    button:hover {
-        background: #444;
-    }
-
-    #status {
-        margin-top: 12px;
-        font-size: 14px;
-        opacity: 0.85;
+    .file-area {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        padding-top: 5px;
     }
 
     small {
-        color: gray;
+        color: #8a8a8a;
+        font-size: 12px;
+    }
+
+    button {
+        margin-top: 10px;
+        padding: 14px;
+        background: linear-gradient(135deg,#333,#222);
+        color: white;
+        font-weight: bold;
+        letter-spacing: .5px;
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: 0.2s ease;
+    }
+
+    button:hover {
+        background: linear-gradient(135deg,#444,#2b2b2b);
+        transform: translateY(-1px);
+    }
+
+    button:active {
+        transform: translateY(0);
+    }
+
+    #status {
+        margin-top: 10px;
+        font-size: 13px;
+        min-height: 18px;
+        text-align: center;
+        opacity: 0.85;
+    }
+
+    @media (max-height: 600px) {
+        body {
+            align-items: flex-start;
+        }
     }
 </style>
 </head>
@@ -84,15 +128,17 @@
     <input type="text" id="discord" placeholder="Discord ID">
 
     <select id="type">
-        <option value="Appeal">Report</option>
-        <option value="Report">Appeal</option>
+        <option value="Report">Report</option>
+        <option value="Appeal">Appeal</option>
         <option value="Other">Other</option>
     </select>
 
     <textarea id="info" placeholder="Explain your issue..."></textarea>
 
-    <input type="file" id="files" multiple>
-    <small>Max 5 files</small>
+    <div class="file-area">
+        <input type="file" id="files" multiple>
+        <small>Max 5 attachments</small>
+    </div>
 
     <button onclick="sendTicket()">Submit</button>
 
@@ -100,8 +146,8 @@
 </div>
 
 <script>
-const WEBHOOK_URL = "https://discord.com/api/webhooks/1444946230068252714/afVwbXYYuYsecP6RESOpdzfSJ2qP7bFMPQKynHynbS-Uup-nwLTgTvnT-_ohTjjTmzBu";  // <= PUT YOUR WEBHOOK HERE
-const RATE_LIMIT_TIME = 60000; // 1 minute
+const WEBHOOK_URL = "https://discord.com/api/webhooks/1444946230068252714/afVwbXYYuYsecP6RESOpdzfSJ2qP7bFMPQKynHynbS-Uup-nwLTgTvnT-_ohTjjTmzBu";
+const RATE_LIMIT_TIME = 60000;
 
 function getLastSentTime() {
     return localStorage.getItem("lastSent") || 0;
@@ -117,7 +163,7 @@ async function sendTicket() {
 
     if (now - lastSent < RATE_LIMIT_TIME) {
         document.getElementById("status").textContent =
-            "you are being ratelimited";
+            "dont spam it.";
         return;
     }
 
@@ -129,13 +175,13 @@ async function sendTicket() {
 
     if (!roblox || !discord || !info) {
         document.getElementById("status").textContent =
-            "i think you missed something.";
+            "you MIGHT have missed something gng.";
         return;
     }
 
     if (filesInput.files.length > 5) {
         document.getElementById("status").textContent =
-            "i said 5 attachments max nigga";
+            "MF i said 5 attachments MAX";
         return;
     }
 
@@ -144,10 +190,9 @@ async function sendTicket() {
     const formData = new FormData();
 
     const payload = {
-        content: null,
         embeds: [
             {
-                title: `🎟️ Ticket #${ticketNumber}`,
+                title: `Ticket #${ticketNumber}`,
                 color: 3092790,
                 fields: [
                     { name: "Type", value: type, inline: true },
@@ -179,7 +224,7 @@ async function sendTicket() {
         setLastSentTime(now);
 
         document.getElementById("status").textContent =
-            `✅ Ticket #${ticketNumber} sent!`;
+            `sent. please wait till rod checks it.`;
 
         document.getElementById("roblox").value = "";
         document.getElementById("discord").value = "";
@@ -188,7 +233,7 @@ async function sendTicket() {
 
     } catch(err) {
         document.getElementById("status").textContent =
-            "❌ Failed to send. Check webhook.";
+            "failed to send.";
     }
 }
 </script>
