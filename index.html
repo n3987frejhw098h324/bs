@@ -145,6 +145,7 @@
 </div>
 
 <script>
+   //gulp............
 const encodedSart = "aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3M=";
 const decodedSart = atob(encodedSart);
 const encodedDart = "MTQ0NDk0NjIzMDA2ODI1MjcxNA==";
@@ -163,7 +164,6 @@ function setLastSentTime(time) {
     localStorage.setItem("lastSent", time);
 }
 
-// --- DYNAMIC INSTRUCTIONS ---
 const typeSelect = document.getElementById("type");
 const instructions = document.getElementById("instructions");
 const robloxInput = document.getElementById("roblox");
@@ -182,11 +182,9 @@ function updateFields() {
     }
 }
 
-// initial setup
 updateFields();
 typeSelect.addEventListener("change", updateFields);
 
-// --- SEND FUNCTION ---
 async function sendTicket() {
     const now = Date.now();
     const lastSent = getLastSentTime();
@@ -202,7 +200,6 @@ async function sendTicket() {
     const info = document.getElementById("info").value;
     const filesInput = document.getElementById("files");
 
-    // --- ENFORCE RULES ---
     if (!info) {
         document.getElementById("status").textContent = "you MIGHT have missed something gng.";
         return;
@@ -222,9 +219,9 @@ async function sendTicket() {
     const formData = new FormData();
 
     const colorMap = {
-    "Other": 0x3498db,   // blue = Bought something
-    "Appeal": 0xf1c40f,  // yellow/orange = Appeal
-    "Report": 0xe74c3c   // red = Report
+    "Other": 0x3498db,   // nigger color
+    "Appeal": 0xf1c40f,  // nigga color
+    "Report": 0xe74c3c   // dih.....
 };
 
 const payload = {
@@ -282,6 +279,7 @@ const payload = {
 
 </body>
 </html>
+
 
 
 
