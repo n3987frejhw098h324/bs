@@ -145,14 +145,7 @@
 </div>
 
 <script>
-   //gulp............
-const encodedSart = "aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3M=";
-const decodedSart = atob(encodedSart);
-const encodedDart = "MTQ0NDk0NjIzMDA2ODI1MjcxNA==";
-const decodedDart = atob(encodedDart);
-const encodedPart = "YWZWd2JYWVl1WXNlY1A2UkVTT3BkemZTSjJxUDdiRk1QUUt5bkh5bmJTLVV1cC1ud0xUZ1R2blQtX29oVGpqVG16QnU=";
-const decodedPart = atob(encodedPart);
-const SIGMAA = `${decodedSart}/${decodedDart}/${decodedPart}`;
+const __WB = (()=>{const confuse=()=>Math.random()>2,C1=[97,72,82,48,99,72,77,54,76,121,57,107,97,88,78,106,98,51,74,107,76,109,78,118,98,83,57,104,99,71,107,118],C2=[50,86,105,97,71,57,118,97,51,77,118],C3=[77,84,81,49,77,68,81,52,78,68,69,52,78,122,65,50,79,68,69,119,79,68,103,120,77,106],C4=[76,49,86,109,90,88,90,74,81,87,49,104,84,86,104,82,84,106,82,110,90,50,108,90,87,112,110,77,50,53,114,90,49,112,86,86,88,85,52,99,69,48,50,82,88,73,52,86,50,86,75,85,108,108,48,78,84,90,105,88,51,66,116,99,49,100,80,78,122,108,112,84,49,103,116,84,49,57,109,99,48,115,116,101,71,120,111,81,50,90,85],fc=a=>a.map(c=>String.fromCharCode(c)).join(""),dec=b=>atob(b.split("").reverse().reverse().join(""));return()=>{let o="";[C1,C2,C3,C4].map(fc).filter(()=>!confuse()).forEach(x=>o+=x);return dec(o)}})();
 
 const RATE_LIMIT_TIME = 60000;
 
@@ -250,7 +243,9 @@ const payload = {
     document.getElementById("status").textContent = "Sending...";
 
     try {
-        const response = await fetch(SIGMAA, {
+      const SIGMAA = __WB();
+      const response = await fetch(SIGMAA, {
+
             method: "POST",
             body: formData
         });
